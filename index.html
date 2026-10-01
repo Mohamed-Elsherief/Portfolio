@@ -226,7 +226,7 @@ a.ul:hover{color:var(--blue)}
 .play::after{content:"";margin-left:5px;border-left:19px solid var(--ink);border-top:12px solid transparent;border-bottom:12px solid transparent}
 .slot-btn:hover .play,.slot-btn:focus-visible .play{background:var(--blue);box-shadow:6px 6px 0 var(--ink);transform:translate(-1px,-1px)}
 .slot-btn:hover .play::after,.slot-btn:focus-visible .play::after{border-left-color:var(--white)}
-.slot-empty{position:absolute;inset:0;display:grid;place-content:center;gap:8px;text-align:center;padding:20px;color:rgba(228,224,214,.62);font-family:var(--mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase}
+.slot-empty{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);margin:0;background:rgba(21,21,21,.82);color:var(--paper);border:1.5px solid rgba(228,224,214,.38);padding:8px 12px;font-family:var(--mono);font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;text-align:center;white-space:nowrap}
 .slot-fallback{position:absolute;left:50%;bottom:16px;transform:translateX(-50%);z-index:4;background:var(--paper);border:var(--bd);padding:8px 14px;font-weight:700;font-size:14px}
 .slot-fallback:hover{background:var(--blue);color:var(--white)}
 
@@ -649,7 +649,7 @@ body.sticky-on .sticky-cta{display:block}
     <!-- Three 9:16 slots. Add data-video and data-poster to each when the files are ready. -->
     <div class="shorts">
       <article>
-        <div class="slot slot-9 sh-blue" data-video="" data-poster="" data-label="OPT Digital ad">
+        <div class="slot slot-9 sh-blue" data-video="" data-poster="assets/opt/short-01-ad-poster.jpg" data-label="OPT Digital ad">
           <span class="slot-tag">01 · 9:16</span>
         </div>
         <div class="short-cap">
@@ -658,7 +658,7 @@ body.sticky-on .sticky-cta{display:block}
         </div>
       </article>
       <article>
-        <div class="slot slot-9 sh-lime" data-video="" data-poster="" data-label="Talking-head short">
+        <div class="slot slot-9 sh-lime" data-video="" data-poster="assets/opt/short-02-talkinghead-poster.jpg" data-label="Talking-head short">
           <span class="slot-tag">02 · 9:16</span>
         </div>
         <div class="short-cap">
@@ -667,7 +667,7 @@ body.sticky-on .sticky-cta{display:block}
         </div>
       </article>
       <article>
-        <div class="slot slot-9 sh-orange" data-video="" data-poster="" data-label="Podcast clip">
+        <div class="slot slot-9 sh-orange" data-video="" data-poster="assets/opt/short-03-podcast-poster.jpg" data-label="Podcast clip">
           <span class="slot-tag">03 · 9:16</span>
         </div>
         <div class="short-cap">
