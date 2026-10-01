@@ -3,12 +3,12 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Mohamed El Sherief — Video, motion &amp; visual style for expert-led creators</title>
-<meta name="description" content="I create a recognisable visual system for experts, educators and consultants, then carry it across videos, shorts, carousels and thumbnails.">
+<title>Mohamed El Sherief — Video editing, motion graphics &amp; visual style</title>
+<meta name="description" content="I help coaches, consultants and educators give their videos a clear, consistent visual style through editing and custom motion graphics, plus supporting social media posts and thumbnails.">
 <meta name="theme-color" content="#E4E0D6">
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
 <meta property="og:type" content="website">
-<meta property="og:title" content="Mohamed El Sherief — Video &amp; visual content for expert-led creators">
+<meta property="og:title" content="Mohamed El Sherief — Video editing, motion graphics &amp; visual style">
 <meta property="og:description" content="Content that looks as good as your offer.">
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -57,7 +57,9 @@ body{
   font-size:16px;
   line-height:1.55;
   -webkit-font-smoothing:antialiased;
-  overflow-x:hidden;
+  /* clip, not hidden: overflow-x:hidden on body makes body a scroll
+     container, which swallows anchor jumps so nav links do nothing */
+  overflow-x:clip;
 }
 ::selection{background:var(--lime);color:var(--ink)}
 :focus-visible{outline:2px solid var(--blue);outline-offset:3px}
@@ -66,9 +68,9 @@ body{
    PRIMITIVES
    ============================================================ */
 .wrap{width:100%;max-width:var(--maxw);margin-inline:auto;padding-inline:var(--padx)}
-.sect{padding-block:var(--pady);border-top:var(--hair);scroll-margin-top:70px}
+.sect{padding-block:var(--pady);border-top:var(--hair);scroll-margin-top:88px}
 .mono{font-family:var(--mono);font-size:12px;letter-spacing:.08em;text-transform:uppercase;font-weight:500}
-.h2{font-weight:800;letter-spacing:-.045em;line-height:1.06;font-size:clamp(40px,6vw,86px);overflow-wrap:break-word}
+.h2{font-weight:800;letter-spacing:-.045em;line-height:1.06;font-size:clamp(32px,4.2vw,56px);overflow-wrap:break-word;max-width:19ch}
 .h3{font-weight:800;letter-spacing:-.035em;line-height:1.1}
 .lede{font-size:clamp(15px,1.5vw,18px);line-height:1.6;max-width:62ch}
 /* italic serif phrase on a highlighter band (ported from the design reference).
@@ -122,18 +124,18 @@ a.ul:hover{color:var(--blue)}
    HERO
    ============================================================ */
 .hero{padding:clamp(40px,5vw,64px) var(--padx) clamp(48px,6vw,80px)}
-.hero-in{max-width:var(--maxw);margin:0 auto;display:grid;grid-template-columns:minmax(0,1fr);gap:clamp(24px,3vw,36px) clamp(8px,3vw,40px)}
+.hero-in{max-width:var(--maxw);margin:0 auto;display:grid;grid-template-columns:minmax(0,1fr);gap:clamp(24px,3vw,36px) clamp(28px,4vw,56px)}
 .eyebrow{grid-column:1;grid-row:1;display:flex;align-items:center;gap:10px;color:var(--ink)}
 .eyebrow::before{content:"";width:9px;height:9px;background:var(--orange);flex:none}
 .hero h1{grid-column:1;grid-row:2;position:relative;z-index:2;font-weight:800;letter-spacing:-.055em;line-height:1.02;overflow-wrap:break-word;font-size:clamp(42px,8.5vw,92px)}
-.hero-rest{grid-column:1;grid-row:4;display:flex;flex-direction:column;gap:28px}
+.hero-rest{grid-column:1;grid-row:3;display:flex;flex-direction:column;gap:26px}
 .hero-actions{display:flex;flex-wrap:wrap;gap:12px}
 .hero-meta{display:flex;flex-wrap:wrap;gap:10px 22px;font-family:var(--mono);font-size:11.5px;letter-spacing:.06em;text-transform:uppercase;color:rgba(21,21,21,.72)}
 .hero-meta li{display:flex;align-items:center;gap:8px}
 .hero-meta li::before{content:"";width:5px;height:5px;background:var(--ink);flex:none}
 .hero-meta li.live::before{background:var(--lime);box-shadow:0 0 0 2px rgba(21,21,21,.9)}
 /* collage: geometry ported verbatim from the design reference */
-.collage{grid-column:1;grid-row:3;justify-self:center;max-width:360px}
+.collage{grid-column:1;grid-row:4;justify-self:center;max-width:320px}
 
 /* ============================================================
    MARQUEE  (dark band, rotated -1.6deg, 38s loop)
@@ -166,7 +168,7 @@ a.ul:hover{color:var(--blue)}
 .plates{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,290px),1fr));gap:clamp(20px,2.5vw,28px)}
 .plate{border:var(--bd);padding:26px 24px 30px;display:flex;flex-direction:column;gap:14px;min-width:0}
 .plate-1{background:var(--lime);box-shadow:7px 7px 0 var(--ink)}
-.plate-2{background:var(--pink);color:var(--white);box-shadow:7px 7px 0 var(--ink)}
+.plate-2{background:var(--pink);color:var(--ink);box-shadow:7px 7px 0 var(--ink)}
 .plate-3{background:var(--blue);color:var(--paper-light);box-shadow:7px 7px 0 var(--ink)}
 .plate-top{display:flex;align-items:center;justify-content:space-between;gap:12px;font-family:var(--mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase}
 .plate-tag{border:1.5px solid currentColor;padding:3px 7px}
@@ -245,7 +247,8 @@ a.ul:hover{color:var(--blue)}
 .case-block p{font-size:16px;line-height:1.6;max-width:60ch}
 .decision{border-left:6px solid var(--pink);padding:4px 0 4px 18px;margin-top:26px}
 .deck{display:block;transform:rotate(1deg);border:var(--bd);box-shadow:10px 10px 0 var(--lime);background:var(--paper-light);transition:transform .2s,box-shadow .2s}
-.deck:hover{transform:rotate(0deg);box-shadow:12px 12px 0 var(--lime)}
+.deck-static{cursor:default}
+.deck:not(.deck-static):hover{transform:rotate(0deg);box-shadow:12px 12px 0 var(--lime)}
 .deck img{width:100%;height:auto;border-bottom:var(--bd)}
 .deck-foot{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:12px 14px;font-family:var(--mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase}
 .shorts{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,230px),1fr));gap:clamp(22px,3vw,34px);margin-top:clamp(44px,5.5vw,76px)}
@@ -300,7 +303,7 @@ a.ul:hover{color:var(--blue)}
 /* ============================================================
    CONTACT  (lime, faint concentric circles)
    ============================================================ */
-.contact{position:relative;background:var(--lime);border-top:var(--bd);overflow:hidden;padding-block:var(--pady)}
+.contact{scroll-margin-top:88px;position:relative;background:var(--lime);border-top:var(--bd);overflow:hidden;padding-block:var(--pady)}
 .rings{position:absolute;left:-120px;top:50%;transform:translateY(-50%);width:760px;height:760px;pointer-events:none;opacity:.14}
 .rings circle{fill:none;stroke:var(--ink);stroke-width:1.5}
 .contact-grid{position:relative;z-index:1;display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,330px),1fr));gap:clamp(32px,4vw,64px);align-items:start}
@@ -379,8 +382,12 @@ body.sticky-on .sticky-cta{display:block}
 }
 @media (min-width:1120px){
   .hero-in{grid-template-columns:minmax(0,1fr) minmax(0,1.12fr)}
-  .hero h1{grid-column:1 / -1;max-width:50%}
-  .collage{grid-column:2;grid-row:1 / span 3;justify-self:end;max-width:600px;margin-right:clamp(8px,3vw,40px)}
+  .hero h1{grid-column:1 / -1;max-width:calc(50% - 40px)}
+  /* keep the headline clear of the collage: a flat 50% let the longest
+     line reach within 1px of it at ~1280px */
+  .collage{grid-column:2;grid-row:1 / span 3;justify-self:end;max-width:600px;margin-right:0}
+  /* no right margin: with width:100% it pulled the collage back into the
+     column gutter, leaving only ~11px beside the text at ~1140px */
   .hero-rest{grid-row:3}
 }
 
@@ -425,9 +432,22 @@ body.sticky-on .sticky-cta{display:block}
 <!-- ======================== HERO ======================== -->
 <section class="hero" id="hero">
   <div class="hero-in">
-    <p class="eyebrow mono">Video, motion &amp; visual style for expert-led creators</p>
+    <p class="eyebrow mono">Video editing, motion graphics &amp; visual style</p>
 
     <h1>Content that looks as good as <span class="hl hl-lime">your offer.</span></h1>
+
+
+    <div class="hero-rest">
+      <p class="lede">I'm Mohamed. I help coaches, consultants and educators give their videos a clear, consistent visual style through editing and custom motion graphics. I also design supporting social media posts and thumbnails.</p>
+      <div class="hero-actions">
+        <a class="btn" href="#work">View selected work</a>
+        <a class="btn btn-ghost" href="#contact">Tell me about your project</a>
+      </div>
+      <ul class="hero-meta">
+        <li class="live">Currently taking on new monthly clients.</li>
+        <li>Editing since 2020</li>
+      </ul>
+    </div>
 
     <div class="collage" aria-label="Cut paper collage: a vintage TV held in cupped hands" role="img" style="align-self:center;position:relative;z-index:1;width:100%;aspect-ratio:1/1">
       <div data-layer="1" style="position:absolute;left:36%;top:4%;width:56%;aspect-ratio:1/1;transition:transform .3s ease-out;will-change:transform">
@@ -461,20 +481,6 @@ body.sticky-on .sticky-cta{display:block}
       </div>
 
     </div>
-
-    <div class="hero-rest">
-      <p class="lede">I create a recognisable visual system for experts, educators and consultants, then carry it across videos, shorts, carousels and thumbnails, so everything you publish feels like one trusted brand.</p>
-      <div class="hero-actions">
-        <a class="btn" href="#contact">Tell me about your project</a>
-        <a class="btn btn-ghost" href="#work">View selected work ↓</a>
-      </div>
-      <ul class="hero-meta">
-        <li class="live">Currently taking on new monthly clients.</li>
-        <li>For experts, educators &amp; consultants</li>
-        <li>Editing since 2020</li>
-        <li>Long-form, shorts &amp; carousels</li>
-      </ul>
-    </div>
   </div>
 </section>
 
@@ -485,120 +491,12 @@ body.sticky-on .sticky-cta{display:block}
   </div>
 </div>
 
-<!-- ======================== CTA BAND ======================== -->
-<section class="cta-band">
-  <div class="cta-in">
-    <p>Want your content to look like this?</p>
-    <a class="btn btn-lime" href="#contact">Tell me about your project</a>
-  </div>
-</section>
-
-<!-- ======================== SERVICES ======================== -->
-<section class="sect" id="services">
-  <div class="wrap">
-    <div class="sect-head">
-      <div>
-        <p class="sect-label mono">Plates 01 to 03 · What I do</p>
-        <h2 class="h2">One style. <span class="hl hl-pink">Everywhere you post.</span></h2>
-      </div>
-      <p class="lede">One person, one visual system, carried across your videos, carousels and thumbnails. Visual direction comes first; everything else follows it.</p>
-    </div>
-
-    <div class="plates">
-      <article class="plate plate-1">
-        <div class="plate-top"><span>Plate 01</span><span class="plate-tag">Step 1 · Start here</span></div>
-        <h3>Visual direction</h3>
-        <p>Before any editing, I build a short style sheet for your content: colours, fonts, layouts and motion, designed around you and the way you teach. You approve it, and everything else follows it.</p>
-      </article>
-      <article class="plate plate-2">
-        <div class="plate-top"><span>Plate 02</span><span class="plate-tag">Follows your system</span></div>
-        <h3>Video editing &amp; motion graphics</h3>
-        <p>Long-form and short-form edits with clear structure, pacing and sound, and motion graphics that explain rather than decorate.</p>
-      </article>
-      <article class="plate plate-3">
-        <div class="plate-top"><span>Plate 03</span><span class="plate-tag">Follows your system</span></div>
-        <h3>Carousels &amp; social graphics</h3>
-        <p>Each video becomes carousels, posts and thumbnails in the same style, so one recording works everywhere you publish.</p>
-      </article>
-    </div>
-  </div>
-</section>
-
-<!-- ======================== APPROACH (+ HOW IT WORKS) ======================== -->
-<section class="sect" id="approach">
-  <div class="wrap">
-    <div class="sect-head">
-      <h2 class="h2">What should the viewer <span class="hl hl-pink">notice first?</span></h2>
-      <p class="lede">Every edit starts with that question, so your viewer follows the idea, not the effects.</p>
-    </div>
-
-    <div class="appr">
-      <article class="appr-card">
-        <div class="appr-media" data-clip="assets/clips/a-readable.mp4" data-poster="assets/clips/a-readable-poster.jpg">
-          <span class="appr-letter">A</span>
-          <img src="assets/clips/a-readable-poster.jpg" alt="" loading="lazy" width="960" height="540">
-        </div>
-        <div class="appr-body">
-          <p class="mono">A · Readable</p>
-          <h3>Make it readable.</h3>
-          <p>Text is timed and placed so it reads while you talk.</p>
-        </div>
-      </article>
-      <article class="appr-card">
-        <div class="appr-media" data-clip="assets/clips/b-attention.mp4" data-poster="assets/clips/b-attention-poster.jpg">
-          <span class="appr-letter">B</span>
-          <img src="assets/clips/b-attention-poster.jpg" alt="" loading="lazy" width="960" height="540">
-        </div>
-        <div class="appr-body">
-          <p class="mono">B · Attention</p>
-          <h3>Guide attention.</h3>
-          <p>Motion introduces a point or connects two ideas. Nothing moves just because it can.</p>
-        </div>
-      </article>
-      <article class="appr-card">
-        <div class="appr-media" data-clip="assets/clips/c-consistency.mp4" data-poster="assets/clips/c-consistency-poster.jpg">
-          <span class="appr-letter">C</span>
-          <img src="assets/clips/c-consistency-poster.jpg" alt="" loading="lazy" width="960" height="540">
-        </div>
-        <div class="appr-body">
-          <p class="mono">C · Consistency</p>
-          <h3>Build consistency.</h3>
-          <p>The same fonts, colours and motion in every piece, so people recognise you in the feed.</p>
-        </div>
-      </article>
-    </div>
-
-    <div style="margin-top:clamp(40px,5vw,64px)">
-      <div class="how-head">
-        <h3>How it works</h3>
-        <p class="mono">Four steps · A single project or monthly</p>
-      </div>
-      <ol class="steps">
-        <li><span class="step-n">01</span><h4>Send me your content.</h4><p>Your channel, a recent video, or raw footage.</p></li>
-        <li><span class="step-n">02</span><h4>We set your visual style.</h4><p>I build your visual direction and you approve it.</p></li>
-        <li><span class="step-n">03</span><h4>I edit and deliver.</h4><p>Videos, shorts and carousels, all in that style.</p></li>
-        <li><span class="step-n">04</span><h4>We review and refine.</h4><p>We review the content together and refine what comes next.</p></li>
-      </ol>
-      <div class="engage">
-        <article class="eng eng-1">
-          <h4>A single project</h4>
-          <p>A sales video, a launch, or a batch of shorts.</p>
-        </article>
-        <article class="eng eng-2">
-          <h4>An ongoing monthly partnership</h4>
-          <p>A consistent set of videos and supporting content each month, all built within your approved visual system.</p>
-        </article>
-      </div>
-    </div>
-  </div>
-</section>
-
 <!-- ======================== SELECTED WORK ======================== -->
 <section class="sect" id="work">
   <div class="wrap">
     <div class="sect-head">
       <h2 class="h2">Selected <span class="hl hl-solid-blue">work.</span></h2>
-      <p class="lede">A sales video and two shorts, each made with one clear idea in mind.</p>
+      <p class="lede">A selection of sales videos, ads and short-form edits.</p>
     </div>
 
     <div class="case-head">
@@ -629,19 +527,19 @@ body.sticky-on .sticky-cta{display:block}
         </div>
         <div class="decision">
           <h4 class="mono" style="margin-bottom:8px">Creative decision</h4>
-          <p style="font-size:16px;line-height:1.6;max-width:60ch">Instead of bringing in a new look, I let their existing brand lead. A viewer who lands on their website after watching sees the same colours, type and feel, so the video and site build trust together.</p>
+          <p style="font-size:16px;line-height:1.6;max-width:60ch">I used their existing colors and typography so the sales video, short-form ad and website would feel connected.</p>
         </div>
       </div>
 
       <div>
         <p class="mono" style="margin-bottom:14px">The style I built</p>
-        <!-- The style sheet ("OPT Digital Brand Deck") was not included in the handoff.
-             Add its URL as the href here to make this preview a link. -->
-        <figure class="deck">
-          <img src="assets/opt/deck-preview.jpg" alt="Preview of the OPT Digital style sheet" loading="lazy" width="900" height="777">
+        <!-- Shown as a still preview: the full style sheet is not published yet.
+             When it is, wrap this figure in a link and restore a "View the full
+             style sheet" call to action. -->
+        <figure class="deck deck-static">
+          <img src="assets/opt/deck-preview.jpg" alt="A page from the OPT Digital visual style sheet" loading="lazy" width="900" height="777">
           <figcaption class="deck-foot">
-            <span>Style sheet · p. 04</span>
-            <span>View the full style sheet ↗</span>
+            <span>Visual style preview</span>
           </figcaption>
         </figure>
       </div>
@@ -680,27 +578,101 @@ body.sticky-on .sticky-cta{display:block}
   </div>
 </section>
 
-<!-- ======================== GOOD FIT ======================== -->
-<section class="sect" id="fit">
+<!-- ======================== SERVICES ======================== -->
+<section class="sect" id="services">
   <div class="wrap">
-    <h2 class="h2">Is this <span class="hl hl-orange">for you?</span></h2>
-    <div class="fit-grid">
-      <div class="fit-col yes">
-        <h3>A good fit if</h3>
-        <ul>
-          <li><span>+</span><span>You publish regularly or are ready to start.</span></li>
-          <li><span>+</span><span>You want your expertise to look as considered as your offer.</span></li>
-          <li><span>+</span><span>You want one person to maintain the visual quality across your content.</span></li>
-          <li><span>+</span><span>You value consistency and clear communication.</span></li>
-        </ul>
+    <div class="sect-head">
+      <div>
+        <p class="sect-label mono">Plates 01 to 03 · What I do</p>
+        <h2 class="h2">A consistent look <span class="hl hl-pink">across your content.</span></h2>
       </div>
-      <div class="fit-col no">
-        <h3>Probably not a fit if</h3>
-        <ul>
-          <li><span>×</span><span>You are choosing entirely on the lowest price.</span></li>
-          <li><span>×</span><span>You want a different visual identity for every post.</span></li>
-          <li><span>×</span><span>You need high-volume editing with no time for visual direction.</span></li>
-        </ul>
+      <p class="lede">We establish a visual direction that fits your brand, then carry it through the content you need.</p>
+    </div>
+
+    <div class="plates">
+      <article class="plate plate-1">
+        <div class="plate-top"><span>Plate 01</span><span class="plate-tag">Step 1 · Start here</span></div>
+        <h3>Visual direction</h3>
+        <p>Colors, fonts, graphic layouts and animation choices shaped around your brand and the way you communicate. I can develop a new direction or work within the identity you already have.</p>
+      </article>
+      <article class="plate plate-2">
+        <div class="plate-top"><span>Plate 02</span><span class="plate-tag">Follows your direction</span></div>
+        <h3>Video editing &amp; motion graphics</h3>
+        <p>Long-form videos and short-form edits with clear structure, deliberate pacing, sound design and custom graphics that help explain your ideas.</p>
+      </article>
+      <article class="plate plate-3">
+        <div class="plate-top"><span>Plate 03</span><span class="plate-tag">Agreed per project</span></div>
+        <h3>Social media posts &amp; thumbnails</h3>
+        <p>Supporting post designs and YouTube thumbnails that fit alongside your videos. We agree on the formats and deliverables based on what you need.</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ======================== APPROACH (+ HOW IT WORKS) ======================== -->
+<section class="sect" id="approach">
+  <div class="wrap">
+    <div class="sect-head">
+      <h2 class="h2">What should the viewer <span class="hl hl-pink">notice first?</span></h2>
+      <p class="lede">That question guides where I place text, when graphics appear and how the edit moves.</p>
+    </div>
+
+    <div class="appr">
+      <article class="appr-card">
+        <div class="appr-media" data-clip="assets/clips/a-readable.mp4" data-poster="assets/clips/a-readable-poster.jpg">
+          <span class="appr-letter">A</span>
+          <img src="assets/clips/a-readable-poster.jpg" alt="" loading="lazy" width="960" height="540">
+        </div>
+        <div class="appr-body">
+          <p class="mono">A · Readable</p>
+          <h3>Make it readable.</h3>
+          <p>Give viewers enough time and space to read while they listen.</p>
+        </div>
+      </article>
+      <article class="appr-card">
+        <div class="appr-media" data-clip="assets/clips/b-attention.mp4" data-poster="assets/clips/b-attention-poster.jpg">
+          <span class="appr-letter">B</span>
+          <img src="assets/clips/b-attention-poster.jpg" alt="" loading="lazy" width="960" height="540">
+        </div>
+        <div class="appr-body">
+          <p class="mono">B · Attention</p>
+          <h3>Guide attention.</h3>
+          <p>Use motion to introduce a point, show a connection or make an idea easier to follow.</p>
+        </div>
+      </article>
+      <article class="appr-card">
+        <div class="appr-media" data-clip="assets/clips/c-consistency.mp4" data-poster="assets/clips/c-consistency-poster.jpg">
+          <span class="appr-letter">C</span>
+          <img src="assets/clips/c-consistency-poster.jpg" alt="" loading="lazy" width="960" height="540">
+        </div>
+        <div class="appr-body">
+          <p class="mono">C · Consistency</p>
+          <h3>Keep it consistent.</h3>
+          <p>Carry a familiar visual style across each piece of content.</p>
+        </div>
+      </article>
+    </div>
+
+    <div style="margin-top:clamp(40px,5vw,64px)">
+      <div class="how-head">
+        <h3>How it works</h3>
+        <p class="mono">Four steps · A single project or monthly</p>
+      </div>
+      <ol class="steps">
+        <li><span class="step-n">01</span><h4>Share your content.</h4><p>Send your channel, a recent video or a short project description.</p></li>
+        <li><span class="step-n">02</span><h4>Agree on the direction.</h4><p>We confirm the scope, visual approach and delivery schedule.</p></li>
+        <li><span class="step-n">03</span><h4>Create and review.</h4><p>I develop the content and we review it against the agreed brief.</p></li>
+        <li><span class="step-n">04</span><h4>Refine and deliver.</h4><p>I make the agreed revisions and prepare the final files.</p></li>
+      </ol>
+      <div class="engage">
+        <article class="eng eng-1">
+          <h4>A single project</h4>
+          <p>A sales video, a launch, or a batch of short-form edits.</p>
+        </article>
+        <article class="eng eng-2">
+          <h4>An ongoing monthly partnership</h4>
+          <p>An agreed set of videos and supporting content each month, built within your approved visual direction.</p>
+        </article>
       </div>
     </div>
   </div>
@@ -729,8 +701,8 @@ body.sticky-on .sticky-cta{display:block}
       <div class="about-copy">
         <h2 class="h2">I care about the <span class="hl hl-orange">small decisions.</span></h2>
         <div style="margin-top:clamp(22px,3vw,32px)">
-          <p class="lede">I'm Mohamed El Sherief, a video editor and motion designer working with expert-led creators: coaches, consultants and educators. Before going independent, I was Digital Content Officer at ICARDA, where I turned complex expert material into content people could understand.</p>
-          <p class="lede" style="margin-top:1em">That is still the core of my work: making valuable ideas clear, watchable and recognisably yours. I define the visual direction before editing, so every decision, from typography to motion, supports the person and the message.</p>
+          <p class="lede">I'm Mohamed El Sherief, a video editor and motion designer working with coaches, consultants and educators. I've been editing since 2020 and previously worked as a Digital Content Officer at ICARDA.</p>
+          <p class="lede" style="margin-top:1em">I spend time finding references and working through the details: whether a graphic is readable, whether an animation feels right, and whether the style suits the person and the message.</p>
         </div>
         <p class="about-foot">Premiere Pro, After Effects, DaVinci Resolve · Works remotely with clients worldwide</p>
       </div>
@@ -752,12 +724,12 @@ body.sticky-on .sticky-cta{display:block}
 
         <div class="faq-item">
           <button class="faq-q" aria-expanded="false"><span class="n">02</span><span class="q">How fast is turnaround?</span><span class="s" aria-hidden="true">+</span></button>
-          <div class="faq-a"><p>Shorts are delivered within 3 days. Long-form usually takes 3 to 5 days, depending on length and how much motion graphics it needs. If a project needs more time, I'll tell you before we start.</p></div>
+          <div class="faq-a"><p>Timing depends on the length, format and amount of motion graphics. I'll confirm the schedule with you before we start.</p></div>
         </div>
 
         <div class="faq-item">
           <button class="faq-q" aria-expanded="false"><span class="n">03</span><span class="q">How many revisions are included?</span><span class="s" aria-hidden="true">+</span></button>
-          <div class="faq-a"><p>In our first month together, revisions are unlimited while we find your style. Once your style is set, each video includes one round of revisions.</p></div>
+          <div class="faq-a"><p>We agree on the number of revision rounds before starting, based on the project. The quote will make clear what's included.</p></div>
         </div>
 
         <div class="faq-item">
@@ -785,8 +757,8 @@ body.sticky-on .sticky-cta{display:block}
     <div class="contact-grid">
       <div>
         <p class="sect-label mono">Contact</p>
-        <h2 class="h2">Tell me what you're <span class="hl hl-plain">building.</span></h2>
-        <p class="lede" style="margin-top:clamp(18px,2.4vw,26px)">Send me your channel, a sample video or a short description of what you publish. I'll review it and reply with a recommended starting point within 1 to 2 business days.</p>
+        <h2 class="h2">Tell me about <span class="hl hl-plain">your project.</span></h2>
+        <p class="lede" style="margin-top:clamp(18px,2.4vw,26px)">Send me your channel, a sample video or a short description of what you need. I'll reply within 1–2 business days with a suggested next step.</p>
 
         <div class="mailrow">
           <span class="mono">Prefer email?</span>
@@ -823,7 +795,7 @@ body.sticky-on .sticky-cta{display:block}
             <div class="chips" id="help-chips" data-mode="multi">
               <button class="chip" type="button" aria-pressed="false">A visual style</button>
               <button class="chip" type="button" aria-pressed="false">Editing &amp; motion graphics</button>
-              <button class="chip" type="button" aria-pressed="false">Carousels</button>
+              <button class="chip" type="button" aria-pressed="false">Social media posts</button>
               <button class="chip" type="button" aria-pressed="false">Thumbnails</button>
               <button class="chip" type="button" aria-pressed="false">Not sure yet</button>
             </div>
@@ -858,6 +830,7 @@ body.sticky-on .sticky-cta{display:block}
   </div>
 </section>
 
+
 </main>
 
 <!-- ======================== FOOTER ======================== -->
@@ -880,7 +853,7 @@ body.sticky-on .sticky-cta{display:block}
   var reduce = window.matchMedia ? window.matchMedia('(prefers-reduced-motion: reduce)') : null;
 
   /* ---------------- marquee (lime dot between each word, 38s loop) ---------------- */
-  var WORDS = ['Recognisable','Readable','Structure','Pacing','Sound','Colour','Captions','Motion graphics','Carousels','Thumbnails'];
+  var WORDS = ['Recognisable','Readable','Structure','Pacing','Sound','Colour','Captions','Motion graphics','Social posts','Thumbnails'];
   var mq = $('#mq');
   if (mq) {
     var run = function () {
@@ -895,6 +868,35 @@ body.sticky-on .sticky-cta{display:block}
     mq.appendChild(run());
     mq.appendChild(run());   /* second copy makes the -50% loop seamless */
   }
+
+  /* ---------------- in-page navigation ----------------
+     Driven explicitly rather than relying on native fragment scrolling, so
+     the landing position clears the sticky header by a predictable margin. */
+  $$('a[href^="#"]').forEach(function (link) {
+    link.addEventListener('click', function (e) {
+      var id = link.getAttribute('href');
+      if (!id || id.length < 2) return;
+      var target = document.querySelector(id);
+      if (!target) return;
+      e.preventDefault();
+      var hdrEl = $('.hdr');
+      var offset = id === '#top' ? 0 : (hdrEl ? hdrEl.offsetHeight : 0) + 16;
+      var y = Math.max(0, target.getBoundingClientRect().top + window.pageYOffset - offset);
+      var smooth = !(reduce && reduce.matches);
+      var from = window.pageYOffset;
+      window.scrollTo({ top: y, behavior: smooth ? 'smooth' : 'auto' });
+      if (smooth) {                               /* some environments ignore
+                                                     smooth scrolling - make
+                                                     sure we still get there */
+        setTimeout(function () {
+          if (Math.abs(window.pageYOffset - from) < 2 && Math.abs(y - from) > 2) {
+            window.scrollTo({ top: y, behavior: 'instant' });
+          }
+        }, 400);
+      }
+      if (history.replaceState) history.replaceState(null, '', id);
+    });
+  });
 
   /* ---------------- scroll progress + sticky mobile CTA ---------------- */
   var prog = $('#prog'), hero = $('#hero'), contact = $('#contact');
@@ -957,8 +959,12 @@ body.sticky-on .sticky-cta{display:block}
     var v = document.createElement('video');
     v.src = box.getAttribute('data-clip');
     v.poster = box.getAttribute('data-poster') || '';
-    v.muted = true; v.loop = true; v.playsInline = true; v.preload = 'metadata';
-    v.setAttribute('muted', ''); v.setAttribute('playsinline', ''); v.setAttribute('loop', '');
+    v.muted = true; v.loop = true; v.playsInline = true; v.autoplay = true;
+    v.preload = 'metadata';
+    v.setAttribute('muted', ''); v.setAttribute('playsinline', '');
+    v.setAttribute('loop', ''); v.setAttribute('autoplay', '');
+    /* autoplay is what actually starts these; the observer below only pauses
+       them off screen, so playback does not depend on it firing. */
     v.tabIndex = -1; v.setAttribute('aria-hidden', 'true');
     box.appendChild(v);
     box.__clip = v;
