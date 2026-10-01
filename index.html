@@ -646,10 +646,10 @@ body.sticky-on .sticky-cta{display:block}
       </div>
     </div>
 
-    <!-- Three 9:16 slots. Add data-video and data-poster to each when the files are ready. -->
+    <!-- Three 9:16 slots: YouTube Shorts, loaded only when the play button is pressed. -->
     <div class="shorts">
       <article>
-        <div class="slot slot-9 sh-blue" data-video="" data-poster="assets/opt/short-01-ad-poster.jpg" data-label="OPT Digital ad">
+        <div class="slot slot-9 sh-blue" data-youtube="n3gh1pkKv1I" data-poster="assets/opt/short-01-ad-poster.jpg" data-label="OPT Digital ad">
           <span class="slot-tag">01 · 9:16</span>
         </div>
         <div class="short-cap">
@@ -658,7 +658,7 @@ body.sticky-on .sticky-cta{display:block}
         </div>
       </article>
       <article>
-        <div class="slot slot-9 sh-lime" data-video="" data-poster="assets/opt/short-02-talkinghead-poster.jpg" data-label="Talking-head short">
+        <div class="slot slot-9 sh-lime" data-youtube="TA64-lP5vS0" data-poster="assets/opt/short-02-talkinghead-poster.jpg" data-label="Talking-head short">
           <span class="slot-tag">02 · 9:16</span>
         </div>
         <div class="short-cap">
@@ -667,7 +667,7 @@ body.sticky-on .sticky-cta{display:block}
         </div>
       </article>
       <article>
-        <div class="slot slot-9 sh-orange" data-video="" data-poster="assets/opt/short-03-podcast-poster.jpg" data-label="Podcast clip">
+        <div class="slot slot-9 sh-orange" data-youtube="u9Z-JMIZIVc" data-poster="assets/opt/short-03-podcast-poster.jpg" data-label="Podcast clip">
           <span class="slot-tag">03 · 9:16</span>
         </div>
         <div class="short-cap">
@@ -933,27 +933,47 @@ body.sticky-on .sticky-cta{display:block}
   if (reduce && reduce.addEventListener) reduce.addEventListener('change', queue);
   queue();
 
-  /* ---------------- approach clips: muted loops, play only while on screen ---------------- */
+  /* ---------------- approach clips: muted autoplaying loops ----------------
+     Mounted up front with preload="metadata" so the file is ready; an
+     observer starts them slightly before they scroll in and pauses them once
+     they leave, so they are never sitting frozen on a first frame.          */
   var media = $$('.appr-media[data-clip]');
+
+  var wantPlay = function (v) {
+    if (reduce && reduce.matches) return;        /* honour reduced motion */
+    var p = v.play();
+    if (p && p.catch) {
+      p.catch(function () {                      /* not buffered yet - retry once ready */
+        v.addEventListener('canplay', function once () {
+          v.removeEventListener('canplay', once);
+          v.play().catch(function () {});
+        });
+      });
+    }
+  };
+
+  media.forEach(function (box) {
+    var v = document.createElement('video');
+    v.src = box.getAttribute('data-clip');
+    v.poster = box.getAttribute('data-poster') || '';
+    v.muted = true; v.loop = true; v.playsInline = true; v.preload = 'metadata';
+    v.setAttribute('muted', ''); v.setAttribute('playsinline', ''); v.setAttribute('loop', '');
+    v.tabIndex = -1; v.setAttribute('aria-hidden', 'true');
+    box.appendChild(v);
+    box.__clip = v;
+  });
+
   if ('IntersectionObserver' in window) {
     var io = new IntersectionObserver(function (entries) {
       entries.forEach(function (en) {
-        var box = en.target, v = box.querySelector('video');
-        if (en.isIntersecting) {
-          if (!v) {
-            v = document.createElement('video');
-            v.src = box.getAttribute('data-clip');
-            v.poster = box.getAttribute('data-poster') || '';
-            v.muted = true; v.loop = true; v.playsInline = true;
-            v.setAttribute('muted',''); v.setAttribute('playsinline','');
-            v.preload = 'none'; v.tabIndex = -1; v.setAttribute('aria-hidden','true');
-            box.appendChild(v);
-          }
-          if (!(reduce && reduce.matches)) v.play().catch(function () {});
-        } else if (v) { v.pause(); }
+        var v = en.target.__clip;
+        if (!v) return;
+        if (en.isIntersecting) wantPlay(v); else v.pause();
       });
-    }, { threshold: 0.35 });
+    }, { threshold: 0, rootMargin: '150px 0px' });
     media.forEach(function (m) { io.observe(m); });
+  } else {
+    media.forEach(function (m) { wantPlay(m.__clip); });
   }
 
   /* ---------------- video slots: poster + play, video loads only on click ---------------- */
