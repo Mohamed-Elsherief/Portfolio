@@ -328,6 +328,9 @@ a.ul:hover{color:var(--blue)}
 .chip:hover{background:var(--paper)}
 .chip[aria-pressed="true"],.chip.on{background:var(--ink);color:var(--paper);box-shadow:3px 3px 0 var(--lime)}
 .req{font-family:var(--mono);font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:rgba(21,21,21,.65)}
+.form-status{min-height:1.2em;font-size:14px;font-weight:600;line-height:1.45}
+.form-status.err-msg{color:#B3005E}
+.form-status.ok-msg{color:#146B2F}
 .sent{border:var(--bd);background:var(--ink);color:var(--paper);box-shadow:10px 10px 0 var(--pink);padding:24px 22px 28px;display:none;flex-direction:column;gap:14px}
 .sent.show{display:flex}
 .form.hide{display:none}
@@ -815,15 +818,21 @@ body.sticky-on .sticky-cta{display:block}
             <textarea id="details" name="details"></textarea>
           </div>
 
+          <!-- Formspree honeypot: hidden from people, filled in by bots.
+               Any submission with this set is discarded silently. -->
+          <input type="text" name="_gotcha" tabindex="-1" autocomplete="off"
+                 aria-hidden="true" style="display:none">
+
           <p class="req">* Required</p>
+          <p class="form-status" id="form-status" role="status" aria-live="polite"></p>
           <button class="btn" type="submit">Send project enquiry →</button>
         </form>
 
         <div class="sent" id="sent" role="status" aria-live="polite">
-          <span class="sent-tag">Enquiry ready</span>
+          <span class="sent-tag">Enquiry sent</span>
           <h3>Thanks, <span id="sent-name">there</span>.</h3>
-          <p>Your enquiry has opened in your email app, ready to send. If nothing opened, email <a href="mailto:mohamed@mohamedelsherief.com">mohamed@mohamedelsherief.com</a> and I'll reply within 1 to 2 business days.</p>
-          <button class="btn btn-lime" type="button" id="edit-enquiry" style="align-self:flex-start">Edit enquiry</button>
+          <p>Your enquiry is with me. I'll reply within 1–2 business days with a suggested next step. If you'd rather email directly, I'm at <a href="mailto:mohamed@mohamedelsherief.com">mohamed@mohamedelsherief.com</a>.</p>
+          <button class="btn btn-lime" type="button" id="edit-enquiry" style="align-self:flex-start">Send another</button>
         </div>
       </div>
     </div>
@@ -1086,11 +1095,23 @@ body.sticky-on .sticky-cta{display:block}
     });
   }
 
-  /* ---------------- enquiry form -> pre-filled mail draft ---------------- */
+  /* ---------------- enquiry form -> Formspree ----------------
+     Posts to the endpoint and only reports success on a 2xx response, so the
+     confirmation reflects an actual delivery rather than an assumption.     */
+  var FORMSPREE = 'https://formspree.io/f/meajejzv';
   var form = $('#enquiry'), sent = $('#sent'), sentName = $('#sent-name');
+  var status = $('#form-status');
+
+  var setStatus = function (text, kind) {
+    if (!status) return;
+    status.textContent = text || '';
+    status.className = 'form-status' + (kind ? ' ' + kind : '');
+  };
+
   if (form) {
     form.addEventListener('submit', function (e) {
       e.preventDefault();
+
       var name = form.name.value.trim();
       var email = form.email.value.trim();
       var ok = true;
@@ -1099,33 +1120,69 @@ body.sticky-on .sticky-cta{display:block}
       fName.classList.toggle('invalid', !name); if (!name) ok = false;
       var emailOk = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
       fEmail.classList.toggle('invalid', !emailOk); if (!emailOk) ok = false;
-      if (!ok) { (!name ? form.name : form.email).focus(); return; }
+      if (!ok) {
+        setStatus('Please check the highlighted fields.', 'err-msg');
+        (!name ? form.name : form.email).focus();
+        return;
+      }
 
       var help = picked('#help-chips'), freq = picked('#freq-chips');
-      var body = [
-        'Name: ' + name,
-        'Email: ' + email,
-        'Channel or sample: ' + (form.link.value.trim() || '—'),
-        'Help with: ' + (help.length ? help.join(', ') : '—'),
-        'Publishes: ' + (freq.length ? freq[0] : '—'),
-        '',
-        form.details.value.trim() || '(no further details)'
-      ].join('\n');
+      var btn = form.querySelector('button[type="submit"]');
+      var label = btn.textContent;
 
-      window.location.href = 'mailto:' + EMAIL +
-        '?subject=' + encodeURIComponent('Project enquiry — ' + name) +
-        '&body=' + encodeURIComponent(body);
+      btn.disabled = true;
+      setStatus('Sending…', '');
 
-      sentName.textContent = name;
-      form.classList.add('hide');
-      sent.classList.add('show');
+      fetch(FORMSPREE, {
+        method: 'POST',
+        headers: { 'Accept': 'application/json', 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          name: name,
+          email: email,                       /* Formspree uses this as reply-to */
+          link: form.link.value.trim() || '—',
+          help: help.length ? help.join(', ') : '—',
+          publishes: freq.length ? freq[0] : '—',
+          details: form.details.value.trim() || '(no further details)',
+          _subject: 'Project enquiry — ' + name,
+          _gotcha: form._gotcha ? form._gotcha.value : ''
+        })
+      })
+        .then(function (res) {
+          return res.json().catch(function () { return {}; })
+            .then(function (data) { return { ok: res.ok, data: data }; });
+        })
+        .then(function (r) {
+          if (r.ok) {
+            setStatus('', '');
+            sentName.textContent = name;
+            form.reset();
+            $$('.chip').forEach(function (c) { c.setAttribute('aria-pressed', 'false'); });
+            form.classList.add('hide');
+            sent.classList.add('show');
+            return;
+          }
+          var detail = '';
+          if (r.data.errors && r.data.errors.length) {
+            detail = r.data.errors.map(function (x) { return x.message; }).join(' ');
+          } else if (r.data.error) {
+            detail = r.data.error;
+          }
+          setStatus(detail || ('That did not send. Please email ' + EMAIL + ' instead.'), 'err-msg');
+        })
+        .catch(function () {
+          setStatus('No connection, so that did not send. Please email ' + EMAIL + ' instead.', 'err-msg');
+        })
+        .then(function () { btn.disabled = false; btn.textContent = label; });
     });
   }
+
   var edit = $('#edit-enquiry');
   if (edit) {
     edit.addEventListener('click', function () {
       sent.classList.remove('show');
       form.classList.remove('hide');
+      setStatus('', '');
+      $$('.field.invalid').forEach(function (f) { f.classList.remove('invalid'); });
       form.name.focus();
     });
   }
