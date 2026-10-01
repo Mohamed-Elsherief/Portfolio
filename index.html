@@ -611,8 +611,8 @@ body.sticky-on .sticky-cta{display:block}
       </dl>
     </div>
 
-    <!-- 16:9 sales video. Drop a file path or URL into data-video to make it playable. -->
-    <div class="slot slot-16 sh-pink" data-video="" data-poster="assets/opt/frame-01.jpg" data-label="Sales video">
+    <!-- 16:9 sales video. data-youtube takes a YouTube ID; data-video takes a file path/URL. -->
+    <div class="slot slot-16 sh-pink" data-youtube="wdTwTUuvLaw" data-poster="assets/opt/frame-01.jpg" data-label="Sales video">
       <span class="slot-tag">Sales video · 16:9</span>
     </div>
 
@@ -959,6 +959,7 @@ body.sticky-on .sticky-cta{display:block}
   /* ---------------- video slots: poster + play, video loads only on click ---------------- */
   $$('.slot').forEach(function (slot) {
     var src = (slot.getAttribute('data-video') || '').trim();
+    var yt = (slot.getAttribute('data-youtube') || '').trim();
     var poster = (slot.getAttribute('data-poster') || '').trim();
     var label = slot.getAttribute('data-label') || 'video';
 
@@ -967,7 +968,7 @@ body.sticky-on .sticky-cta{display:block}
       img.className = 'poster'; img.src = poster; img.alt = ''; img.loading = 'lazy';
       slot.appendChild(img);
     }
-    if (!src) {
+    if (!src && !yt) {
       var note = document.createElement('p');
       note.className = 'slot-empty';
       note.textContent = poster ? 'Video coming soon' : label + ' · coming soon';
@@ -982,6 +983,19 @@ body.sticky-on .sticky-cta{display:block}
     slot.appendChild(btn);
 
     btn.addEventListener('click', function () {
+      if (yt) {                                   /* YouTube: nothing loads until this click */
+        var f = document.createElement('iframe');
+        f.src = 'https://www.youtube-nocookie.com/embed/' + yt +
+                '?autoplay=1&rel=0&modestbranding=1&playsinline=1';
+        f.title = label;
+        f.loading = 'lazy';
+        f.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share';
+        f.allowFullscreen = true;
+        f.setAttribute('style', 'position:absolute;inset:0;width:100%;height:100%;border:0');
+        btn.style.display = 'none';
+        slot.appendChild(f);
+        return;
+      }
       var v = document.createElement('video');
       v.src = src; v.controls = true; v.autoplay = true; v.playsInline = true;
       v.setAttribute('playsinline',''); v.preload = 'metadata';
