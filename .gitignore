@@ -1,0 +1,5 @@
+# macOS writes one of these beside every real file when the source lives on
+# a non-Mac filesystem. They are resource-fork metadata, never part of the
+# site, and GitHub Pages would serve them as-is.
+._*
+.DS_Store
